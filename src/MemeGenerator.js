@@ -59,7 +59,7 @@ class MemeGenerator extends Component {
     } else {
       memes = [meme];
     }
-    localStorage.setItem("memes", JSON.stringify([memes]));
+    localStorage.setItem("memes", JSON.stringify(memes));
     alert("saved");
   }
 
