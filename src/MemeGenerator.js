@@ -87,16 +87,20 @@ class MemeGenerator extends Component {
             value={this.state.bottomText}
             onChange={this.handleChange}
           />
-
+          
           <button onClick={this.handleClick}>Gen</button>
+         
+         
+
         </form>
+        <button onClick={this.save}>Save Meme</button>
         <div className="meme">
           <img src={this.state.randomImg} alt="" />
           <h2 className="top">{this.state.topText}</h2>
           <h2 className="bottom">{this.state.bottomText}</h2>
         </div>
         <br />
-        <button onClick={this.save}>Save Meme</button>
+        
       </div>
     );
   }

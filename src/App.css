@@ -25,6 +25,8 @@ header > img {
   margin-left: 10%;
 }
 
+
+
 header > p {
   font-family: VT323, monospace;
   color: whitesmoke;
@@ -33,6 +35,9 @@ header > p {
 }
 
 header > a {
+  color: whitesmoke;
+}
+header > link{
   color: whitesmoke;
 }
 

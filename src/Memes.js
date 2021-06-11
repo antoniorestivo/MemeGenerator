@@ -10,7 +10,9 @@ class Memes extends Component {
 
  componentDidMount(){
    const memes = localStorage.getItem("memes")
+   if (memes) {
    this.setState({ memes: JSON.parse(memes) })
+  }
  }
   
   
