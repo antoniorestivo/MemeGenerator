@@ -1,8 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 
-// convert funciton to class.
-function Memes() {
-  return <h1>Memes Index</h1>;
+class Memes extends Component {
+ constructor(){
+  super();
+  this.state = {  
+    memes: [], 
+  };
+ }
+
+ componentDidMount(){
+   const memes = localStorage.getItem("memes")
+   this.setState({ memes: JSON.parse(memes) })
+ }
+  
+  
+  render(){
+    const memes = this.state.memes
+    return( 
+      memes.map((meme,i) => (
+        <div className="meme" key={i}>
+          <img src={meme.randomImg} alt="" />
+          <h2 className="top">{meme.topText}</h2>
+          <h2 className="bottom">{meme.bottomText}</h2>
+        </div>
+      ))
+    ) 
+  } 
 }
-
 export default Memes;

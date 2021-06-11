@@ -32,6 +32,10 @@ header > p {
   margin-left: 60px;
 }
 
+header > a {
+  color: whitesmoke;
+}
+
 .meme {
   display: flex;
   justify-content: center;
