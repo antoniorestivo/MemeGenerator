@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import db from "./firebase"
 
 class MemeGenerator extends Component {
   constructor() {
@@ -9,7 +10,7 @@ class MemeGenerator extends Component {
       randomImg: "http://i.imgflip.com/1bij.jpg",
       allMemeImgs: [],
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.getJoke = this.getJoke.bind(this);
     this.save = this.save.bind(this);
@@ -33,7 +34,7 @@ class MemeGenerator extends Component {
       });
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
@@ -42,7 +43,7 @@ class MemeGenerator extends Component {
     event.preventDefault();
     const random = Math.floor(Math.random() * this.state.allMemeImgs.length);
     const newImg = this.state.allMemeImgs[random];
-    this.setState({ randomImg: newImg.url });
+      this.setState({ randomImg: newImg.url });
     this.getJoke();
   }
 
@@ -52,14 +53,18 @@ class MemeGenerator extends Component {
       bottomText: this.state.bottomText,
       randomImg: this.state.randomImg,
     };
-    let memes = localStorage.getItem("memes");
-    if (memes) {
-      memes = JSON.parse(memes);
-      memes.push(meme);
-    } else {
-      memes = [meme];
-    }
-    localStorage.setItem("memes", JSON.stringify(memes));
+    // let memes = localStorage.getItem("memes");
+    // if (memes) {
+    //   memes = JSON.parse(memes);
+    //   memes.push(meme);
+    // } else {
+    //   memes = [meme];
+    // }
+    // localStorage.setItem("memes", JSON.stringify(memes));
+    db.collection("memes").add(meme).then(docref => {
+      console.log(docref)
+    }).catch(error => console.log(error))
+
     alert("saved");
   }
 

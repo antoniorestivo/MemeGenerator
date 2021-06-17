@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import db from "./firebase"
 
 class Memes extends Component {
  constructor(){
@@ -9,10 +10,18 @@ class Memes extends Component {
  }
 
  componentDidMount(){
-   const memes = localStorage.getItem("memes")
-   if (memes) {
-   this.setState({ memes: JSON.parse(memes) })
-  }
+  //  const memes = localStorage.getItem("memes")
+  //  if (memes) {
+  //  this.setState({ memes: JSON.parse(memes) })
+  // }
+  const memes = []
+
+  db.collection("memes").get().then(snapshot => {
+    snapshot.forEach(doc => {
+      memes.push(doc.data())
+    })
+    this.setState({memes})
+  }).catch(error => console.log(error)) 
  }
   
   
