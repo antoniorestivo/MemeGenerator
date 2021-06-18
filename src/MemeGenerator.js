@@ -10,10 +10,12 @@ class MemeGenerator extends Component {
       randomImg: "http://i.imgflip.com/1bij.jpg",
       allMemeImgs: [],
     };
-    // this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-    this.getJoke = this.getJoke.bind(this);
-    this.save = this.save.bind(this);
+   
+   
+  }
+
+  handleError(error) {
+    alert(error)
   }
 
   componentDidMount() {
@@ -22,57 +24,50 @@ class MemeGenerator extends Component {
       .then((response) => {
         const { memes } = response.data;
         this.setState({ allMemeImgs: memes });
-      });
+      })
+      .catch(error => this.handleError(error));
     this.getJoke();
   }
 
-  getJoke() {
+  getJoke = () => {
     fetch("https://official-joke-api.appspot.com/random_joke")
       .then((response) => response.json())
       .then((response) => {
         this.setState({ topText: response.setup, bottomText: response.punchline });
-      });
+      })
+      .catch(error => this.handleError(error));
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   }
-  handleClick(event) {
-    console.log(this.state.allMemeImgs);
+
+  handleClick = (event) => {
     event.preventDefault();
     const random = Math.floor(Math.random() * this.state.allMemeImgs.length);
     const newImg = this.state.allMemeImgs[random];
-      this.setState({ randomImg: newImg.url });
+    this.setState({ randomImg: newImg.url });
     this.getJoke();
   }
 
-  save() {
+  save = () => {
     const meme = {
       topText: this.state.topText,
       bottomText: this.state.bottomText,
       randomImg: this.state.randomImg,
     };
-    // let memes = localStorage.getItem("memes");
-    // if (memes) {
-    //   memes = JSON.parse(memes);
-    //   memes.push(meme);
-    // } else {
-    //   memes = [meme];
-    // }
-    // localStorage.setItem("memes", JSON.stringify(memes));
-    db.collection("memes").add(meme).then(docref => {
-      console.log(docref)
-    }).catch(error => console.log(error))
+ 
+    db
+      .collection("memes")
+      .add(meme)
+      .then(docref => {
+        console.log(docref)
+      })
+      .catch(error => this.handleError(error))
 
     alert("saved");
   }
-
-  /**
-   * Create a method that, when the "Gen" button is clicked, chooses one of the
-   * memes from our `allMemeImgs` array at random and makes it so that is the
-   * meme image that shows up in the bottom portion of our meme generator site (`.url`)
-   */
 
   render() {
     return (
@@ -95,8 +90,6 @@ class MemeGenerator extends Component {
           
           <button onClick={this.handleClick}>Gen</button>
          
-         
-
         </form>
         <button onClick={this.save}>Save Meme</button>
         <div className="meme">
